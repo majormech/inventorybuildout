@@ -10,6 +10,35 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module">
+      import("/src/main.tsx").catch((error) => {
+        const root = document.getElementById("root");
+        if (!root) {
+          throw error;
+        }
+
+        root.innerHTML = `
+          <main style="font-family: Arial, sans-serif; max-width: 720px; margin: 48px auto; padding: 24px; line-height: 1.5;">
+            <h1 style="margin-bottom: 12px;">DFD Inventory Staging</h1>
+            <p style="margin-bottom: 12px;">
+              This repository contains Vite source code. Browsers cannot run <code>.tsx</code> files directly from a downloaded folder or basic static file server.
+            </p>
+            <p style="margin-bottom: 12px;">
+              To run the app locally, use:
+            </p>
+            <pre style="background: #f4f4f4; padding: 16px; border-radius: 8px; overflow: auto;">npm install
+npm run dev</pre>
+            <p style="margin-bottom: 12px;">
+              To deploy or serve a production build, create the compiled assets first:
+            </p>
+            <pre style="background: #f4f4f4; padding: 16px; border-radius: 8px; overflow: auto;">npm run build</pre>
+            <p style="margin-bottom: 12px;">
+              Then serve the generated <code>dist</code> folder or deploy through Cloudflare Workers with the configured static assets.
+            </p>
+            <p style="color: #666;">Original error: ${String(error)}</p>
+          </main>
+        `;
+      });
+    </script>
   </body>
 </html>
