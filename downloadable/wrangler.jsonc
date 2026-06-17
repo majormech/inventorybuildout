@@ -1,0 +1,43 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "dfd-inventory-staging",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-06-16",
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "APP_NAME": "Decatur Fire Department Inventory Staging",
+    "AI_PROVIDER": "mock"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "dfd_inventory",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "./migrations"
+    }
+  ],
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "env": {
+    "production": {
+      "name": "dfd-inventory",
+      "vars": {
+        "APP_NAME": "Decatur Fire Department Inventory",
+        "AI_PROVIDER": "mock"
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "dfd_inventory_prod",
+          "database_id": "00000000-0000-0000-0000-000000000000",
+          "migrations_dir": "./migrations"
+        }
+      ]
+    }
+  }
+}
