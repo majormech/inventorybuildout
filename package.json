@@ -10,10 +10,16 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "cf:configure": "node scripts/configure-cloudflare.mjs",
+    "cf:check": "wrangler check",
     "cf:typegen": "wrangler types",
-    "deploy": "npm run build && wrangler deploy",
+    "deploy": "npm run deploy:staging",
+    "deploy:staging": "npm run build && npm run cf:check && wrangler deploy",
+    "deploy:production": "npm run build && npm run cf:check && wrangler deploy --env production",
     "db:migrate:local": "wrangler d1 migrations apply dfd_inventory --local",
-    "db:migrate:remote": "wrangler d1 migrations apply dfd_inventory --remote"
+    "db:migrate:remote": "npm run db:migrate:remote:staging",
+    "db:migrate:remote:staging": "wrangler d1 migrations apply dfd_inventory --remote",
+    "db:migrate:remote:production": "wrangler d1 migrations apply dfd_inventory_prod --remote --env production"
   },
   "dependencies": {
     "react": "^19.1.0",
